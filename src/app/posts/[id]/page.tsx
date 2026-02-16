@@ -103,19 +103,10 @@ Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
 
 如果你想通过命令行部署：
 
-\`\`\`bash
-# 安装 Vercel CLI
-npm i -g vercel
-
-# 登录
-vercel login
-
-# 链接项目
-vercel link
-
-# 部署到生产环境
-vercel --prod
-\`\`\`
+1. 安装 Vercel CLI: npm i -g vercel
+2. 登录: vercel login
+3. 链接项目: vercel link
+4. 部署到生产环境: vercel --prod
 
 ## 注意事项
 
@@ -133,6 +124,10 @@ A: 检查 GitHub 上的代码是否是最新的，确保已经 push 到远程仓
 A: 查看 Vercel 控制台的构建日志，通常是依赖或配置问题`,
   },
 };
+
+export function generateStaticParams() {
+  return [{ id: '1' }, { id: '2' }, { id: '3' }];
+}
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const post = posts[Number(params.id) as keyof typeof posts];
@@ -171,10 +166,7 @@ export default function PostPage({ params }: { params: { id: string } }) {
             href="/" 
             className="inline-flex items-center text-white/80 hover:text-white mb-4 text-sm"
           >
-            <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            返回首页
+            ← 返回首页
           </Link>
           <div className="flex items-center gap-3 text-sm text-white/70 mb-3">
             <span className="bg-blue-500/80 text-white px-3 py-1 rounded-full text-xs font-medium">
@@ -208,14 +200,14 @@ export default function PostPage({ params }: { params: { id: string } }) {
                 </ul>
               );
             }
-            if (trimmed.startsWith('```')) {
-              return null;
-            }
-            if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
-              return <p key={i} className="text-zinc-700 dark:text-zinc-300 font-bold my-4">{trimmed.replace(/\*\*/g, '')}</p>;
-            }
-            if (trimmed.startsWith('Q:') || trimmed.startsWith('**Q:')) {
-              return <p key={i} className="text-zinc-700 dark:text-zinc-300 font-semibold my-4">{trimmed}</p>;
+            if (trimmed.match(/^\d+\./)) {
+              return (
+                <ol key={i} className="list-decimal list-inside space-y-1 my-4">
+                  {trimmed.split('\n').map((line, j) => (
+                    <li key={j} className="text-zinc-700 dark:text-zinc-300">{line.replace(/^\d+\.\s*/, '')}</li>
+                  ))}
+                </ol>
+              );
             }
             return <p key={i} className="text-zinc-700 dark:text-zinc-300 leading-relaxed my-4">{trimmed}</p>;
           })}
