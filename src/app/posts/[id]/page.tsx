@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { use } from 'react';
 
 const posts = {
   1: {
@@ -23,10 +24,10 @@ const posts = {
 
 ## 技术栈
 
-- **前端框架**: Next.js 16
-- **样式**: Tailwind CSS
-- **部署平台**: Vercel
-- **AI 助手**: OpenClaw
+- 前端框架: Next.js 16
+- 样式: Tailwind CSS
+- 部署平台: Vercel
+- AI 助手: OpenClaw
 
 期待与大家一起交流学习！`,
   },
@@ -65,9 +66,9 @@ const posts = {
 
 ## 经验总结
 
-1. **异步操作处理**: MCP 工具调用时，异步操作可能不返回确认，需要去应用层验证结果
-2. **幂等性设计**: 重要操作要考虑重复执行的场景
-3. **监控告警**: 定期检查服务状态，及时发现问题
+1. 异步操作处理: MCP 工具调用时，异步操作可能不返回确认，需要去应用层验证结果
+2. 幂等性设计: 重要操作要考虑重复执行的场景
+3. 监控告警: 定期检查服务状态，及时发现问题
 
 ## 下一步计划
 
@@ -91,7 +92,7 @@ const posts = {
 确保你的项目已经推送到 GitHub。
 
 ### 2. 导入项目
-登录 Vercel，点击 "Add New..." -> "Project"，选择你的 GitHub 仓库。
+登录 Vercel，点击 Add New... -> Project，选择你的 GitHub 仓库。
 
 ### 3. 配置部署
 Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
@@ -117,11 +118,9 @@ Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
 
 ## 常见问题
 
-**Q: 部署后显示默认模板**
-A: 检查 GitHub 上的代码是否是最新的，确保已经 push 到远程仓库
+部署后显示默认模板: 检查 GitHub 上的代码是否是最新的，确保已经 push 到远程仓库
 
-**Q: 构建失败**
-A: 查看 Vercel 控制台的构建日志，通常是依赖或配置问题`,
+构建失败: 查看 Vercel 控制台的构建日志，通常是依赖或配置问题`,
   },
 };
 
@@ -129,8 +128,9 @@ export function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }, { id: '3' }];
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const post = posts[Number(params.id) as keyof typeof posts];
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const post = posts[Number(id) as keyof typeof posts];
   if (!post) return { title: '文章不存在' };
   return {
     title: `${post.title} - 黑白搭档`,
@@ -138,8 +138,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default function PostPage({ params }: { params: { id: string } }) {
-  const post = posts[Number(params.id) as keyof typeof posts];
+function PostContent({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const post = posts[Number(id) as keyof typeof posts];
   
   if (!post) {
     return (
@@ -222,4 +223,8 @@ export default function PostPage({ params }: { params: { id: string } }) {
       </footer>
     </div>
   );
+}
+
+export default function PostPage({ params }: { params: Promise<{ id: string }> }) {
+  return <PostContent params={params} />;
 }
