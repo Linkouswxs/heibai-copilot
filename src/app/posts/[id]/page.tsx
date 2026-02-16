@@ -155,46 +155,46 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-300">
       {/* Hero */}
-      <div className="relative h-[45vh] md:h-[55vh] overflow-hidden">
+      <div className="relative h-[35vh] md:h-[45vh] lg:h-[55vh] overflow-hidden">
         <img 
           src={post.cover} 
           alt={post.title}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 max-w-3xl mx-auto px-6 pb-10">
+        <div className="absolute bottom-0 left-0 right-0 max-w-3xl mx-auto px-4 md:px-6 pb-6 md:pb-10">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-1.5 text-zinc-300 hover:text-white mb-5 text-sm font-medium transition-colors"
+            className="inline-flex items-center gap-1 text-zinc-300 hover:text-white mb-4 md:mb-5 text-xs md:text-sm font-medium transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             返回首页
           </Link>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="px-3 py-1 bg-white/10 backdrop-blur-sm text-white text-xs font-medium rounded-md border border-white/20">
+          <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-3 md:mb-4">
+            <span className="px-2 md:px-3 py-0.5 md:py-1 bg-white/10 backdrop-blur-sm text-white text-[10px] md:text-xs font-medium rounded-md border border-white/20">
               {post.category}
             </span>
-            <span className="text-zinc-400 text-sm">{post.date}</span>
+            <span className="text-zinc-400 text-xs md:text-sm">{post.date}</span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+          <h1 className="text-xl md:text-2xl lg:text-4xl font-bold text-white leading-tight">
             {post.title}
           </h1>
         </div>
       </div>
 
       {/* Content */}
-      <main className="max-w-2xl mx-auto px-6 py-14">
+      <main className="max-w-2xl mx-auto px-4 md:px-6 py-10 md:py-14">
         <article className="prose prose-zinc dark:prose-invert max-w-none 
           prose-headings:font-semibold prose-headings:tracking-tight
-          prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-zinc-900 dark:prose-h2:text-white
-          prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200
-          prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-p:leading-7 prose-p:my-4
-          prose-ul:my-4 prose-ul:pl-5 prose-ul:space-y-1.5
-          prose-li:text-zinc-600 dark:prose-li:text-zinc-400
+          prose-h2:text-lg md:text-xl prose-h2:mt-8 md:prose-h2:mt-10 prose-h2:mb-3 md:prose-h2:mb-4 prose-h2:text-zinc-900 dark:prose-h2:text-white
+          prose-h3:text-base md:text-lg prose-h3:mt-6 md:prose-h3:mt-8 prose-h3:mb-2 md:prose-h3:mb-3 prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200
+          prose-p:text-sm md:text-base prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-p:leading-6 md:prose-p:leading-7 prose-p:my-3 md:prose-p:my-4
+          prose-ul:my-3 md:prose-ul:my-4 prose-ul:pl-4 md:prose-ul:pl-5 prose-ul:space-y-1 md:prose-ul:space-y-1.5
+          prose-li:text-sm md:prose-li:text-base prose-li:text-zinc-600 dark:prose-li:text-zinc-400
           prose-strong:text-zinc-800 dark:prose-strong:text-zinc-200
-          prose-code:text-blue-600 dark:prose-code:text-blue-400 prose-code:bg-blue-50 dark:prose-code:bg-blue-900/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+          prose-code:text-blue-600 dark:prose-code:text-blue-400 prose-code:bg-blue-50 dark:prose-code:bg-blue-900/20 prose-code:px-1 prose-code:py-0.5 md:prose-code:px-1.5 md:prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
           prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline">
           {paragraphs.map((para, i) => {
             const trimmed = para.trim();
@@ -215,9 +215,9 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
             }
             if (trimmed.match(/^\d+\./)) {
               return (
-                <ol key={i} className="list-decimal list-inside space-y-2 my-4 pl-2">
+                <ol key={i} className="list-decimal list-inside space-y-1 md:space-y-2 my-3 md:my-4 pl-1 md:pl-2">
                   {trimmed.split('\n').map((line, j) => (
-                    <li key={j} className="text-zinc-600 dark:text-zinc-400">{line.replace(/^\d+\.\s*/, '')}</li>
+                    <li key={j} className="text-zinc-600 dark:text-zinc-400 text-sm md:text-base">{line.replace(/^\d+\.\s*/, '')}</li>
                   ))}
                 </ol>
               );
@@ -228,9 +228,9 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-10">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-6 md:py-10">
+        <div className="max-w-3xl mx-auto px-4 md:px-6 text-center">
+          <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400">
             © 2026 黑白搭档 · 技术博客
           </p>
         </div>
