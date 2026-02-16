@@ -144,8 +144,8 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
   
   if (!post) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
-        <p className="text-zinc-500">文章不存在</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black">
+        <p className="text-slate-500">文章不存在</p>
       </div>
     );
   }
@@ -153,72 +153,84 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
   const paragraphs = post.content.trim().split('\n\n');
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black">
       {/* Hero */}
-      <div className="relative h-64 md:h-80 overflow-hidden">
+      <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
         <img 
           src={post.cover} 
           alt={post.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 max-w-4xl mx-auto px-4 pb-8">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 max-w-4xl mx-auto px-6 pb-12">
           <Link 
             href="/" 
-            className="inline-flex items-center text-white/80 hover:text-white mb-4 text-sm"
+            className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-6 text-sm font-medium transition-colors"
           >
-            ← 返回首页
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            返回首页
           </Link>
-          <div className="flex items-center gap-3 text-sm text-white/70 mb-3">
-            <span className="bg-blue-500/80 text-white px-3 py-1 rounded-full text-xs font-medium">
+          <div className="flex items-center gap-4 mb-4">
+            <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium border border-white/20">
               {post.category}
             </span>
-            <span>{post.date}</span>
+            <span className="text-white/70">{post.date}</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white">
+          <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight">
             {post.title}
           </h1>
         </div>
       </div>
 
       {/* Content */}
-      <main className="max-w-3xl mx-auto px-4 py-12">
-        <article className="prose prose-lg dark:prose-invert max-w-none">
+      <main className="max-w-3xl mx-auto px-6 py-16">
+        <article className="prose prose-lg dark:prose-invert max-w-none 
+          prose-headings:font-bold prose-headings:tracking-tight
+          prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
+          prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-4
+          prose-p:text-slate-600 dark:prose-p:text-slate-400 prose-p:leading-relaxed
+          prose-ul:list-disc prose-ul:pl-6 prose-ul:space-y-2
+          prose-li:text-slate-600 dark:prose-li:text-slate-400
+          prose-strong:text-slate-800 dark:prose-strong:text-slate-200">
           {paragraphs.map((para, i) => {
             const trimmed = para.trim();
             if (trimmed.startsWith('## ')) {
-              return <h2 key={i} className="text-2xl font-bold mt-8 mb-4">{trimmed.replace('## ', '')}</h2>;
+              return <h2 key={i}>{trimmed.replace('## ', '')}</h2>;
             }
             if (trimmed.startsWith('### ')) {
-              return <h3 key={i} className="text-xl font-semibold mt-6 mb-3">{trimmed.replace('### ', '')}</h3>;
+              return <h3 key={i}>{trimmed.replace('### ', '')}</h3>;
             }
             if (trimmed.startsWith('- ')) {
               return (
-                <ul key={i} className="list-disc list-inside space-y-1 my-4">
+                <ul key={i}>
                   {trimmed.split('\n').map((line, j) => (
-                    <li key={j} className="text-zinc-700 dark:text-zinc-300">{line.replace('- ', '')}</li>
+                    <li key={j}>{line.replace('- ', '')}</li>
                   ))}
                 </ul>
               );
             }
             if (trimmed.match(/^\d+\./)) {
               return (
-                <ol key={i} className="list-decimal list-inside space-y-1 my-4">
+                <ol key={i} className="list-decimal list-inside space-y-2 my-4">
                   {trimmed.split('\n').map((line, j) => (
-                    <li key={j} className="text-zinc-700 dark:text-zinc-300">{line.replace(/^\d+\.\s*/, '')}</li>
+                    <li key={j} className="text-slate-600 dark:text-slate-400">{line.replace(/^\d+\.\s*/, '')}</li>
                   ))}
                 </ol>
               );
             }
-            return <p key={i} className="text-zinc-700 dark:text-zinc-300 leading-relaxed my-4">{trimmed}</p>;
+            return <p key={i}>{trimmed}</p>;
           })}
         </article>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 mt-12">
-        <div className="max-w-4xl mx-auto px-4 py-8 text-center text-zinc-500 dark:text-zinc-400">
-          <p>© 2026 黑白搭档 · 技术博客</p>
+      <footer className="border-t border-slate-200/50 dark:border-slate-800/50 py-12 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-slate-500 dark:text-slate-400">
+            © 2026 <span className="font-semibold text-slate-700 dark:text-slate-300">黑白搭档</span> · 技术博客
+          </p>
         </div>
       </footer>
     </div>
