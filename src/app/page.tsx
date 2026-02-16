@@ -17,8 +17,8 @@ const posts = [
   },
   {
     id: 2,
-    title: 'Next.js 16 新特性解析',
-    excerpt: '探索 Next.js 16 的最新功能，包括 Turbopack、服务器组件等。',
+    title: 'OpenClaw + 飞书 + Vercel 开发实战',
+    excerpt: '记录黑白搭档博客的搭建过程，以及 AI 助手开发的心路历程。',
     date: '2026-02-15',
     category: '技术',
     cover: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800',
@@ -69,7 +69,6 @@ export default function Home() {
             <article 
               key={post.id} 
               className="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
-              style={{ animationDelay: `${i * 100}ms` }}
             >
               <Link href={`/posts/${post.id}`} className="block">
                 <div className="aspect-video overflow-hidden">

@@ -14,33 +14,68 @@ const posts = {
 
 ## 关于博客
 
+本博客使用 Next.js + Tailwind CSS + Vercel 搭建，是一个轻量级的技术博客。
+
 本博客主要用于记录：
 - 技术学习笔记
 - 项目实践经验
 - 思考与感悟
 
+## 技术栈
+
+- **前端框架**: Next.js 16
+- **样式**: Tailwind CSS
+- **部署平台**: Vercel
+- **AI 助手**: OpenClaw
+
 期待与大家一起交流学习！`,
   },
   2: {
-    title: 'Next.js 16 新特性解析',
-    excerpt: '探索 Next.js 16 的最新功能，包括 Turbopack、服务器组件等。',
+    title: 'OpenClaw + 飞书 + Vercel 开发实战',
+    excerpt: '记录黑白搭档博客的搭建过程，以及 AI 助手开发的心路历程。',
     date: '2026-02-15',
     category: '技术',
     cover: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200',
-    content: `Next.js 16 带来了许多令人兴奋的新特性，让我们一起来看看。
+    content: `最近搭建了这个技术博客，顺便把 AI 助手开发的一些经验整理出来分享给大家。
 
-## Turbopack
+## 背景
 
-Turbopack 是 Vercel 推出的新一代打包工具，比 Webpack 快 10 倍。它使用 Rust 编写，专门针对 Next.js 进行了优化。
+黑白搭档是一个基于 OpenClaw 的 AI 助手，主要帮助我处理日常工作，包括：
+- 课题研究平台 (wu_zk) 的开发和维护
+- 小红书内容运营
+- 飞书文档管理
+- 各种自动化任务
 
-### 主要特点
-- 极速编译
-- 智能缓存
-- 实时刷新
+## 技术架构
 
-## 服务器组件
+### 1. OpenClaw 配置
+- 模型: MiniMax-M2.5
+- 渠道: 飞书、Telegram
+- 记忆: 向量化 + 混合搜索
 
-服务器组件让你可以在服务器上渲染组件，减少客户端 JavaScript 体积。`,
+### 2. MCP 工具生态
+- xiaohongshu-mcp: 小红书运营
+- feishu-mcp: 飞书文档操作
+- claude-scientific-skills: 科研辅助
+
+### 3. 博客搭建
+- Next.js 16 + Tailwind CSS
+- Vercel 部署
+- 响应式设计 + 暗色模式
+
+## 经验总结
+
+1. **异步操作处理**: MCP 工具调用时，异步操作可能不返回确认，需要去应用层验证结果
+2. **幂等性设计**: 重要操作要考虑重复执行的场景
+3. **监控告警**: 定期检查服务状态，及时发现问题
+
+## 下一步计划
+
+- 添加博客分类和标签功能
+- 支持 Markdown 文章
+- 增加评论功能
+
+如果你也有类似的 AI 助手开发经验，欢迎交流！`,
   },
   3: {
     title: 'Vercel 部署实战指南',
@@ -62,7 +97,40 @@ Turbopack 是 Vercel 推出的新一代打包工具，比 Webpack 快 10 倍。�
 Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
 
 ### 4. 完成！
-等待部署完成，你将获得一个免费的 HTTPS 域名。`,
+等待部署完成，你将获得一个免费的 HTTPS 域名。
+
+## 使用 Vercel CLI 部署
+
+如果你想通过命令行部署：
+
+\`\`\`bash
+# 安装 Vercel CLI
+npm i -g vercel
+
+# 登录
+vercel login
+
+# 链接项目
+vercel link
+
+# 部署到生产环境
+vercel --prod
+\`\`\`
+
+## 注意事项
+
+- 免费套餐每月 100GB 流量
+- 支持自定义域名
+- 自动配置 HTTPS
+- 支持环境变量配置
+
+## 常见问题
+
+**Q: 部署后显示默认模板**
+A: 检查 GitHub 上的代码是否是最新的，确保已经 push 到远程仓库
+
+**Q: 构建失败**
+A: 查看 Vercel 控制台的构建日志，通常是依赖或配置问题`,
   },
 };
 
@@ -139,6 +207,15 @@ export default function PostPage({ params }: { params: { id: string } }) {
                   ))}
                 </ul>
               );
+            }
+            if (trimmed.startsWith('```')) {
+              return null;
+            }
+            if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+              return <p key={i} className="text-zinc-700 dark:text-zinc-300 font-bold my-4">{trimmed.replace(/\*\*/g, '')}</p>;
+            }
+            if (trimmed.startsWith('Q:') || trimmed.startsWith('**Q:')) {
+              return <p key={i} className="text-zinc-700 dark:text-zinc-300 font-semibold my-4">{trimmed}</p>;
             }
             return <p key={i} className="text-zinc-700 dark:text-zinc-300 leading-relaxed my-4">{trimmed}</p>;
           })}
