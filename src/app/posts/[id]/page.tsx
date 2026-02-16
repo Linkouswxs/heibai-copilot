@@ -9,6 +9,10 @@ const posts = {
     date: '2026-02-16',
     category: '随笔',
     cover: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200',
+    author: '黑白搭档',
+    likes: 128,
+    comments: 23,
+    collects: 45,
     content: `欢迎来到黑白搭档技术博客！
 
 这是一个专注于技术分享的博客，我会在这里记录学习与成长的点点滴滴。
@@ -37,6 +41,10 @@ const posts = {
     date: '2026-02-15',
     category: '技术',
     cover: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200',
+    author: '黑白搭档',
+    likes: 256,
+    comments: 45,
+    collects: 89,
     content: `最近搭建了这个技术博客，顺便把 AI 助手开发的一些经验整理出来分享给大家。
 
 ## 背景
@@ -84,6 +92,10 @@ const posts = {
     date: '2026-02-14',
     category: '教程',
     cover: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200',
+    author: '黑白搭档',
+    likes: 189,
+    comments: 31,
+    collects: 67,
     content: `Vercel 是部署 Next.js 项目的最佳选择，下面是详细步骤。
 
 ## 部署步骤
@@ -144,7 +156,7 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
   
   if (!post) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
+      <div className="min-h-screen flex items-center justify-center bg-[#FFF5F5]">
         <p className="text-zinc-500">文章不存在</p>
       </div>
     );
@@ -153,88 +165,140 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
   const paragraphs = post.content.trim().split('\n\n');
 
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-300">
-      {/* Hero */}
-      <div className="relative h-[35vh] md:h-[45vh] lg:h-[55vh] overflow-hidden">
-        <img 
-          src={post.cover} 
+    <div className="min-h-screen bg-[#FFF5F5] dark:bg-zinc-950 pb-24">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-red-100 dark:border-zinc-800">
+        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-pink-500 rounded-lg flex items-center justify-center shadow-lg shadow-red-400/30">
+              <span className="text-white font-bold text-sm">H</span>
+            </div>
+          </Link>
+          <div className="flex items-center gap-2">
+            <button className="p-2 text-zinc-500 hover:text-red-500 transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+            <button className="p-2 text-zinc-500 hover:text-red-500 transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Cover */}
+      <div className="relative h-[45vh] overflow-hidden">
+        <img
+          src={post.cover}
           alt={post.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 max-w-3xl mx-auto px-4 md:px-6 pb-6 md:pb-10">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-1 text-zinc-300 hover:text-white mb-4 md:mb-5 text-xs md:text-sm font-medium transition-colors"
-          >
-            <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            返回首页
-          </Link>
-          <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-3 md:mb-4">
-            <span className="px-2 md:px-3 py-0.5 md:py-1 bg-white/10 backdrop-blur-sm text-white text-[10px] md:text-xs font-medium rounded-md border border-white/20">
-              {post.category}
-            </span>
-            <span className="text-zinc-400 text-xs md:text-sm">{post.date}</span>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+      </div>
+
+      {/* Content Card */}
+      <div className="max-w-6xl mx-auto px-4 -mt-6 relative z-10">
+        <div className="bg-white dark:bg-zinc-900 rounded-t-3xl p-6 shadow-xl">
+          {/* Author */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
+                H
+              </div>
+              <div>
+                <p className="font-semibold text-sm text-zinc-800 dark:text-white">{post.author}</p>
+                <p className="text-xs text-zinc-400">{post.date}</p>
+              </div>
+            </div>
+            <button className="px-4 py-1.5 bg-red-500 text-white text-sm font-medium rounded-full shadow-lg shadow-red-400/30 hover:bg-red-600 transition-colors">
+              + 关注
+            </button>
           </div>
-          <h1 className="text-xl md:text-2xl lg:text-4xl font-bold text-white leading-tight">
+
+          {/* Title */}
+          <h1 className="text-xl md:text-2xl font-bold text-zinc-800 dark:text-white mb-4 leading-tight">
             {post.title}
           </h1>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <span className="px-3 py-1 bg-red-50 dark:bg-zinc-800 text-red-500 text-xs font-medium rounded-full">
+              #{post.category}
+            </span>
+          </div>
+
+          {/* Article */}
+          <article className="prose prose-red dark:prose-invert max-w-none
+            prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-p:leading-7 prose-p:my-4
+            prose-h2:text-lg prose-h2:font-bold prose-h2:text-zinc-800 dark:prose-h2:text-white prose-h2:mt-8 prose-h2:mb-3
+            prose-h3:text-base prose-h3:font-semibold prose-h3:text-zinc-700 dark:prose-h3:text-zinc-300 prose-h3:mt-6 prose-h3:mb-2
+            prose-ul:my-4 prose-ul:pl-5 prose-ul:space-y-2
+            prose-li:text-zinc-600 dark:prose-li:text-zinc-400
+            prose-strong:text-zinc-800 dark:prose-strong:text-zinc-200">
+            {paragraphs.map((para, i) => {
+              const trimmed = para.trim();
+              if (trimmed.startsWith('## ')) {
+                return <h2 key={i}>{trimmed.replace('## ', '')}</h2>;
+              }
+              if (trimmed.startsWith('### ')) {
+                return <h3 key={i}>{trimmed.replace('### ', '')}</h3>;
+              }
+              if (trimmed.startsWith('- ')) {
+                return (
+                  <ul key={i}>
+                    {trimmed.split('\n').map((line, j) => (
+                      <li key={j}>{line.replace('- ', '')}</li>
+                    ))}
+                  </ul>
+                );
+              }
+              if (trimmed.match(/^\d+\./)) {
+                return (
+                  <ol key={i} className="list-decimal list-inside space-y-2 my-4 pl-2">
+                    {trimmed.split('\n').map((line, j) => (
+                      <li key={j} className="text-zinc-600 dark:text-zinc-400">{line.replace(/^\d+\.\s*/, '')}</li>
+                    ))}
+                  </ol>
+                );
+              }
+              return <p key={i}>{trimmed}</p>;
+            })}
+          </article>
         </div>
       </div>
 
-      {/* Content */}
-      <main className="max-w-2xl mx-auto px-4 md:px-6 py-10 md:py-14">
-        <article className="prose prose-zinc dark:prose-invert max-w-none 
-          prose-headings:font-semibold prose-headings:tracking-tight
-          prose-h2:text-lg md:text-xl prose-h2:mt-8 md:prose-h2:mt-10 prose-h2:mb-3 md:prose-h2:mb-4 prose-h2:text-zinc-900 dark:prose-h2:text-white
-          prose-h3:text-base md:text-lg prose-h3:mt-6 md:prose-h3:mt-8 prose-h3:mb-2 md:prose-h3:mb-3 prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200
-          prose-p:text-sm md:text-base prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-p:leading-6 md:prose-p:leading-7 prose-p:my-3 md:prose-p:my-4
-          prose-ul:my-3 md:prose-ul:my-4 prose-ul:pl-4 md:prose-ul:pl-5 prose-ul:space-y-1 md:prose-ul:space-y-1.5
-          prose-li:text-sm md:prose-li:text-base prose-li:text-zinc-600 dark:prose-li:text-zinc-400
-          prose-strong:text-zinc-800 dark:prose-strong:text-zinc-200
-          prose-code:text-blue-600 dark:prose-code:text-blue-400 prose-code:bg-blue-50 dark:prose-code:bg-blue-900/20 prose-code:px-1 prose-code:py-0.5 md:prose-code:px-1.5 md:prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-          prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline">
-          {paragraphs.map((para, i) => {
-            const trimmed = para.trim();
-            if (trimmed.startsWith('## ')) {
-              return <h2 key={i}>{trimmed.replace('## ', '')}</h2>;
-            }
-            if (trimmed.startsWith('### ')) {
-              return <h3 key={i}>{trimmed.replace('### ', '')}</h3>;
-            }
-            if (trimmed.startsWith('- ')) {
-              return (
-                <ul key={i}>
-                  {trimmed.split('\n').map((line, j) => (
-                    <li key={j}>{line.replace('- ', '')}</li>
-                  ))}
-                </ul>
-              );
-            }
-            if (trimmed.match(/^\d+\./)) {
-              return (
-                <ol key={i} className="list-decimal list-inside space-y-1 md:space-y-2 my-3 md:my-4 pl-1 md:pl-2">
-                  {trimmed.split('\n').map((line, j) => (
-                    <li key={j} className="text-zinc-600 dark:text-zinc-400 text-sm md:text-base">{line.replace(/^\d+\.\s*/, '')}</li>
-                  ))}
-                </ol>
-              );
-            }
-            return <p key={i}>{trimmed}</p>;
-          })}
-        </article>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-6 md:py-10">
-        <div className="max-w-3xl mx-auto px-4 md:px-6 text-center">
-          <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400">
-            © 2026 黑白搭档 · 技术博客
-          </p>
+      {/* Bottom Actions */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-t border-red-100 dark:border-zinc-800 safe-area-bottom z-50">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-around">
+          <button className="flex items-center gap-1.5 text-zinc-500 text-sm">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            分享
+          </button>
+          <button className="flex items-center gap-1.5 text-zinc-500 text-sm">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+            收藏 {post.collects}
+          </button>
+          <button className="flex items-center gap-1.5 text-zinc-500 text-sm">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            评论 {post.comments}
+          </button>
+          <button className="flex items-center gap-1.5 text-red-500 text-sm font-medium">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            {post.likes}
+          </button>
         </div>
-      </footer>
+      </div>
     </div>
   );
 }

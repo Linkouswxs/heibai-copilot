@@ -8,6 +8,8 @@ const posts = [
     date: '2026-02-16',
     category: '随笔',
     cover: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800',
+    likes: 128,
+    comments: 23,
   },
   {
     id: 2,
@@ -16,6 +18,8 @@ const posts = [
     date: '2026-02-15',
     category: '技术',
     cover: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800',
+    likes: 256,
+    comments: 45,
   },
   {
     id: 3,
@@ -24,114 +28,131 @@ const posts = [
     date: '2026-02-14',
     category: '教程',
     cover: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800',
+    likes: 189,
+    comments: 31,
   },
 ];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFF5F5] dark:bg-zinc-950">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-200/60 dark:border-zinc-800/60">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 md:gap-3 group">
-            <div className="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-zinc-900 to-zinc-700 dark:from-white dark:to-zinc-300 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <span className="text-white dark:text-zinc-900 font-bold text-xs md:text-sm">H</span>
+      <header className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-red-100 dark:border-zinc-800">
+        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-pink-500 rounded-lg flex items-center justify-center shadow-lg shadow-red-400/30">
+              <span className="text-white font-bold text-sm">H</span>
             </div>
-            <span className="text-base md:text-lg font-semibold text-zinc-800 dark:text-zinc-100 tracking-tight">
-              黑白搭档
-            </span>
+            <span className="text-base font-bold text-zinc-800 dark:text-white">黑白搭档</span>
           </Link>
-          <nav className="flex items-center gap-0.5 md:gap-1">
-            {['首页', '关于'].map((item) => (
-              <Link
-                key={item}
-                href={item === '首页' ? '/' : `/${item}`}
-                className="px-2 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
-              >
-                {item}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex items-center gap-2">
+            <button className="p-2 text-zinc-500 hover:text-red-500 transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative py-16 md:py-24 lg:py-28 px-4 md:px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-zinc-50 dark:bg-zinc-950" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] md:w-[500px] lg:w-[800px] h-[300px] md:h-[400px] lg:h-[500px] bg-gradient-to-b from-blue-500/5 to-transparent dark:from-blue-500/10 rounded-full blur-2xl md:blur-3xl" />
-        
-        <div className="relative max-w-3xl mx-auto text-center">
-          <p className="text-xs md:text-sm font-medium text-blue-600 dark:text-blue-400 mb-3 md:mb-4 tracking-wider uppercase">
-            技术博客
-          </p>
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-white mb-4 md:mb-6 leading-tight tracking-tight">
-            记录学习
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
-              探索技术
-            </span>
-          </h1>
-          <p className="text-sm md:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto mb-6 md:mb-8 leading-relaxed px-2">
-            在这里分享技术见解、学习心得和项目经验。
-          </p>
-          <div className="flex items-center justify-center gap-2 md:gap-3 text-xs md:text-sm text-zinc-500 dark:text-zinc-500">
-            <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-500 rounded-full animate-pulse" />
-            持续更新中
-          </div>
-        </div>
-      </section>
-
-      {/* Posts */}
-      <main className="max-w-5xl mx-auto px-4 md:px-6 pb-16 md:pb-24">
-        <div className="flex items-center gap-2 md:gap-3 mb-8 md:mb-10">
-          <div className="w-6 md:w-8 h-px bg-zinc-300 dark:bg-zinc-700" />
-          <h2 className="text-base md:text-lg font-semibold text-zinc-900 dark:text-white">最新文章</h2>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {posts.map((post) => (
-            <Link 
-              key={post.id} 
-              href={`/posts/${post.id}`}
-              className="group flex flex-col bg-zinc-50 dark:bg-zinc-900/50 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-lg hover:shadow-zinc-900/5 transition-all duration-300 hover:-translate-y-1"
+      {/* Categories */}
+      <div className="bg-white dark:bg-zinc-900 border-b border-red-100 dark:border-zinc-800 sticky top-14 z-40">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3 overflow-x-auto scrollbar-hide">
+          {['全部', '技术', '教程', '随笔', 'AI', '开发'].map((cat, i) => (
+            <button
+              key={cat}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                i === 0
+                  ? 'bg-red-500 text-white shadow-md shadow-red-400/30'
+                  : 'bg-red-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-red-100 dark:hover:bg-zinc-700'
+              }`}
             >
-              <div className="aspect-[3/2] overflow-hidden relative">
-                <img 
-                  src={post.cover} 
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Posts Grid */}
+      <main className="max-w-6xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {posts.map((post) => (
+            <Link
+              key={post.id}
+              href={`/posts/${post.id}`}
+              className="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-red-400/10 transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="aspect-[4/5] overflow-hidden relative">
+                <img
+                  src={post.cover}
                   alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <div className="flex-1 p-4 md:p-5 flex flex-col">
-                <div className="flex items-center gap-2 mb-2 md:mb-3">
-                  <span className="px-2 py-0.5 md:py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-[10px] md:text-[11px] font-medium rounded-md">
+                <div className="absolute top-2 left-2">
+                  <span className="px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-semibold text-pink-500 shadow-sm">
                     {post.category}
                   </span>
-                  <span className="text-[10px] md:text-xs text-zinc-400 dark:text-zinc-500">{post.date}</span>
                 </div>
-                <h3 className="font-semibold text-sm md:text-base text-zinc-900 dark:text-white leading-snug mb-1 md:mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+              </div>
+              <div className="p-3">
+                <h3 className="font-semibold text-sm text-zinc-800 dark:text-white leading-snug mb-2 line-clamp-2 group-hover:text-red-500 transition-colors">
                   {post.title}
                 </h3>
-                <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 mt-auto">
-                  {post.excerpt}
-                </p>
+                <div className="flex items-center justify-between text-xs text-zinc-400">
+                  <span>{post.date}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-1">
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                      </svg>
+                      {post.likes}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                      {post.comments}
+                    </span>
+                  </div>
+                </div>
               </div>
             </Link>
           ))}
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-6 md:py-10">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 text-center">
-          <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400">
-            © 2026 黑白搭档 · 技术博客
-          </p>
-          <p className="text-[10px] md:text-xs text-zinc-400 dark:text-zinc-500 mt-1 md:mt-2">
-            Built with Next.js
-          </p>
+      {/* Tab Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-t border-red-100 dark:border-zinc-800 safe-area-bottom z-50">
+        <div className="max-w-6xl mx-auto flex items-center justify-around h-14">
+          <button className="flex flex-col items-center gap-0.5 text-red-500">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9.464 3.036a2.5 2.5 0 015.072 0L20 13.5l-5.322 3.636a2.5 2.5 0 01-3.232.128l-.112-.09L3.5 13.5 9.464 3.036zM21 12c0 .93-.25 1.8-.683 2.55L13 21l-2.732-1.89a2.5 2.5 0 00-3.252-.227l-.116.074 6.4 4.8a2.5 2.5 0 003.268.073l.116-.074 6.4-4.8-.116.1A2.5 2.5 0 0121 12z"/>
+            </svg>
+            <span className="text-[10px] font-medium">首页</span>
+          </button>
+          <button className="flex flex-col items-center gap-0.5 text-zinc-400 dark:text-zinc-500">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+            <span className="text-[10px] font-medium">分类</span>
+          </button>
+          <button className="flex flex-col items-center gap-0.5 text-zinc-400 dark:text-zinc-500">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            <span className="text-[10px] font-medium">发布</span>
+          </button>
+          <button className="flex flex-col items-center gap-0.5 text-zinc-400 dark:text-zinc-500">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span className="text-[10px] font-medium">我的</span>
+          </button>
         </div>
-      </footer>
+      </div>
+
+      {/* Spacer for tab bar */}
+      <div className="h-20" />
     </div>
   );
 }
