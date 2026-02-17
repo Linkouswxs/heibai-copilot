@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { use } from 'react';
 
 const posts = {
   1: {
@@ -150,14 +149,24 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-function PostContent({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const post = posts[Number(id) as keyof typeof posts];
   
   if (!post) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FFF5F5]">
-        <p className="text-zinc-500">文章不存在</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-white to-pink-50 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
+        <div className="text-center">
+          <div className="w-24 h-24 mx-auto mb-6 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center">
+            <svg className="w-12 h-12 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-zinc-600 dark:text-zinc-400 mb-2">文章不存在</h2>
+          <Link href="/" className="text-red-500 hover:text-red-600 font-medium">
+            返回首页 →
+          </Link>
+        </div>
       </div>
     );
   }
@@ -165,22 +174,28 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
   const paragraphs = post.content.trim().split('\n\n');
 
   return (
-    <div className="min-h-screen bg-[#FFF5F5] dark:bg-zinc-950 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-pink-50 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 pb-24">
+      {/* Animated Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 -left-40 w-80 h-80 bg-red-300/20 dark:bg-red-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 -right-40 w-96 h-96 bg-pink-300/20 dark:bg-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-red-100 dark:border-zinc-800">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-pink-500 rounded-lg flex items-center justify-center shadow-lg shadow-red-400/30">
-              <span className="text-white font-bold text-sm">H</span>
+      <header className="sticky top-0 z-50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border-b border-white/20 dark:border-zinc-800/50">
+        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-9 h-9 bg-gradient-to-br from-rose-400 via-red-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/30 group-hover:shadow-red-500/50 transition-shadow duration-300">
+              <span className="text-white font-bold text-base">H</span>
             </div>
           </Link>
           <div className="flex items-center gap-2">
-            <button className="p-2 text-zinc-500 hover:text-red-500 transition-colors">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button className="w-9 h-9 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all duration-200 group">
+              <svg className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
             </button>
-            <button className="p-2 text-zinc-500 hover:text-red-500 transition-colors">
+            <button className="w-9 h-9 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 hover:text-zinc-800 dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-200 group">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
               </svg>
@@ -190,54 +205,94 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
       </header>
 
       {/* Cover */}
-      <div className="relative h-[45vh] overflow-hidden">
+      <div className="relative h-[40vh] md:h-[50vh] overflow-hidden">
         <img
           src={post.cover}
           alt={post.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        
+        {/* Floating Category */}
+        <div className="absolute top-4 left-4">
+          <span className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-red-500 shadow-lg">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+            {post.category}
+          </span>
+        </div>
       </div>
 
       {/* Content Card */}
-      <div className="max-w-6xl mx-auto px-4 -mt-6 relative z-10">
-        <div className="bg-white dark:bg-zinc-900 rounded-t-3xl p-6 shadow-xl">
+      <div className="max-w-4xl mx-auto px-4 -mt-8 relative z-10">
+        <div className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-xl border border-white/50 dark:border-zinc-800/50">
           {/* Author */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
+              <div className="w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-red-500/30">
                 H
               </div>
               <div>
-                <p className="font-semibold text-sm text-zinc-800 dark:text-white">{post.author}</p>
-                <p className="text-xs text-zinc-400">{post.date}</p>
+                <p className="font-semibold text-zinc-800 dark:text-white">{post.author}</p>
+                <p className="text-sm text-zinc-400">{post.date} · 3 min read</p>
               </div>
             </div>
-            <button className="px-4 py-1.5 bg-red-500 text-white text-sm font-medium rounded-full shadow-lg shadow-red-400/30 hover:bg-red-600 transition-colors">
+            <button className="px-5 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white text-sm font-semibold rounded-full shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:scale-105 transition-all duration-300">
               + 关注
             </button>
           </div>
 
           {/* Title */}
-          <h1 className="text-xl md:text-2xl font-bold text-zinc-800 dark:text-white mb-4 leading-tight">
+          <h1 className="text-2xl md:text-3xl font-bold text-zinc-800 dark:text-white mb-6 leading-tight">
             {post.title}
           </h1>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            <span className="px-3 py-1 bg-red-50 dark:bg-zinc-800 text-red-500 text-xs font-medium rounded-full">
-              #{post.category}
-            </span>
+          {/* Stats */}
+          <div className="flex items-center gap-6 py-4 border-y border-zinc-100 dark:border-zinc-800 mb-8">
+            <button className="flex items-center gap-2 text-zinc-500 hover:text-red-500 transition-colors group">
+              <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center group-hover:bg-red-50 dark:group-hover:bg-red-500/10 transition-colors">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <span className="font-medium">{post.likes}</span>
+            </button>
+            <button className="flex items-center gap-2 text-zinc-500 hover:text-blue-500 transition-colors group">
+              <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center group-hover:bg-blue-50 dark:group-hover:bg-blue-500/10 transition-colors">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <span className="font-medium">{post.comments}</span>
+            </button>
+            <button className="flex items-center gap-2 text-zinc-500 hover:text-amber-500 transition-colors group">
+              <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center group-hover:bg-amber-50 dark:group-hover:bg-amber-500/10 transition-colors">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+              </div>
+              <span className="font-medium">{post.collects}</span>
+            </button>
+            <button className="flex items-center gap-2 text-zinc-500 hover:text-green-500 transition-colors group ml-auto">
+              <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center group-hover:bg-green-50 dark:group-hover:bg-green-500/10 transition-colors">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+              </div>
+              <span className="font-medium">分享</span>
+            </button>
           </div>
 
-          {/* Article */}
-          <article className="prose prose-red dark:prose-invert max-w-none
-            prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-p:leading-7 prose-p:my-4
-            prose-h2:text-lg prose-h2:font-bold prose-h2:text-zinc-800 dark:prose-h2:text-white prose-h2:mt-8 prose-h2:mb-3
-            prose-h3:text-base prose-h3:font-semibold prose-h3:text-zinc-700 dark:prose-h3:text-zinc-300 prose-h3:mt-6 prose-h3:mb-2
-            prose-ul:my-4 prose-ul:pl-5 prose-ul:space-y-2
-            prose-li:text-zinc-600 dark:prose-li:text-zinc-400
-            prose-strong:text-zinc-800 dark:prose-strong:text-zinc-200">
+          {/* Article Content */}
+          <article className="prose prose-lg max-w-none
+            prose-p:text-zinc-600 dark:prose-p:text-zinc-400 prose-p:leading-8 prose-p:my-6
+            prose-headings:font-bold prose-headings:text-zinc-800 dark:prose-headings:text-white
+            prose-h2:text-xl prose-h2:mt-12 prose-h2:mb-4
+            prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+            prose-ul:my-6 prose-ul:pl-6 prose-ul:space-y-3
+            prose-li:text-zinc-600 dark:prose-li:text-zinc-400 prose-li:leading-7
+            prose-strong:text-zinc-800 dark:prose-strong:text-zinc-200
+            prose-code:text-red-500 dark:prose-code:text-pink-400 prose-code:bg-red-50 dark:prose-code:bg-red-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+            prose-pre:bg-zinc-900 dark:prose-pre:bg-zinc-950 prose-pre:text-zinc-300">
             {paragraphs.map((para, i) => {
               const trimmed = para.trim();
               if (trimmed.startsWith('## ')) {
@@ -257,9 +312,9 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
               }
               if (trimmed.match(/^\d+\./)) {
                 return (
-                  <ol key={i} className="list-decimal list-inside space-y-2 my-4 pl-2">
+                  <ol key={i} className="list-decimal list-inside space-y-3 my-6 pl-2">
                     {trimmed.split('\n').map((line, j) => (
-                      <li key={j} className="text-zinc-600 dark:text-zinc-400">{line.replace(/^\d+\.\s*/, '')}</li>
+                      <li key={j} className="text-zinc-600 dark:text-zinc-400 leading-7">{line.replace(/^\d+\.\s*/, '')}</li>
                     ))}
                   </ol>
                 );
@@ -267,42 +322,57 @@ function PostContent({ params }: { params: Promise<{ id: string }> }) {
               return <p key={i}>{trimmed}</p>;
             })}
           </article>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mt-8 pt-8 border-t border-zinc-100 dark:border-zinc-800">
+            <span className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-sm font-medium rounded-full hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 transition-colors cursor-pointer">
+              #{post.category}
+            </span>
+            <span className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-sm font-medium rounded-full hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 transition-colors cursor-pointer">
+              #Next.js
+            </span>
+            <span className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-sm font-medium rounded-full hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 transition-colors cursor-pointer">
+              #Vercel
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-t border-red-100 dark:border-zinc-800 safe-area-bottom z-50">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-around">
-          <button className="flex items-center gap-1.5 text-zinc-500 text-sm">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-            分享
-          </button>
-          <button className="flex items-center gap-1.5 text-zinc-500 text-sm">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-            </svg>
-            收藏 {post.collects}
-          </button>
-          <button className="flex items-center gap-1.5 text-zinc-500 text-sm">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            评论 {post.comments}
-          </button>
-          <button className="flex items-center gap-1.5 text-red-500 text-sm font-medium">
+      {/* Bottom Actions - Floating */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <div className="flex items-center gap-2 px-2 py-2 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl rounded-full shadow-xl shadow-black/10 border border-white/20 dark:border-zinc-800/50">
+          <button className="flex items-center gap-2 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50 dark:hover:bg-red-500/10">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
-            {post.likes}
+            <span className="text-sm font-medium">{post.likes}</span>
+          </button>
+          <div className="w-px h-6 bg-zinc-200 dark:bg-zinc-700" />
+          <button className="flex items-center gap-2 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-blue-500 transition-colors rounded-full hover:bg-blue-50 dark:hover:bg-blue-500/10">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span className="text-sm font-medium">{post.comments}</span>
+          </button>
+          <div className="w-px h-6 bg-zinc-200 dark:bg-zinc-700" />
+          <button className="flex items-center gap-2 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-amber-500 transition-colors rounded-full hover:bg-amber-50 dark:hover:bg-amber-500/10">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+            <span className="text-sm font-medium">收藏</span>
+          </button>
+          <div className="w-px h-6 bg-zinc-200 dark:bg-zinc-700" />
+          <button className="flex items-center gap-2 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-green-500 transition-colors rounded-full hover:bg-green-50 dark:hover:bg-green-500/10">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            <span className="text-sm font-medium">分享</span>
           </button>
         </div>
       </div>
+
+      {/* Spacer for floating bar */}
+      <div className="h-20" />
     </div>
   );
-}
-
-export default function PostPage({ params }: { params: Promise<{ id: string }> }) {
-  return <PostContent params={params} />;
 }
