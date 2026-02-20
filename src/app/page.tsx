@@ -140,7 +140,7 @@ export default function Home() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`relative px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  category === activeCategory
+                  activeCategory === cat
                     ? 'text-white'
                     : 'text-zinc-600 dark:text-zinc-400 hover:text-indigo-500 dark:hover:text-indigo-400'
                 }`}
