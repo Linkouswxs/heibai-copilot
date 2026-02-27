@@ -30,7 +30,13 @@ export const posts: BlogPost[] = [
 
 ## 关于博客
 
-本博客使用 Next.js + Tailwind CSS + Vercel 搭建，是一个轻量级的技术博客。
+本博客使用 **Next.js 16 + Tailwind CSS + Vercel** 搭建，是一个轻量级的技术博客。
+
+### 技术选型
+
+根据 Vercel 官方文档，Next.js 是原生支持的全栈框架，Vercel 为其提供了最优化的部署体验[^1]。
+
+> "Vercel is the native Next.js platform, designed to enhance the Next.js experience."
 
 本博客主要用于记录：
 - 技术学习笔记
@@ -39,10 +45,25 @@ export const posts: BlogPost[] = [
 
 ## 技术栈
 
-- 前端框架: Next.js 16
-- 样式: Tailwind CSS
-- 部署平台: Vercel
-- AI 助手: OpenClaw`,
+- 前端框架: **Next.js 16** (最新版本，采用 App Router)[^2]
+- 样式: **Tailwind CSS 4**
+- 部署平台: **Vercel**
+- AI 助手: **OpenClaw**[^3]
+
+### Next.js 16 新特性
+
+根据 Next.js 官方博客，Next.js 16 使用了最新的 React Canary 版本，包含 React 19.2 的新特性[^4]：
+
+- 改进的 Server Components
+- 更快的 Turbopack 构建
+- 默认启用 App Router
+
+## 参考来源
+
+[^1]: [Next.js on Vercel - Vercel Docs](https://vercel.com/docs/frameworks/full-stack/nextjs)
+[^2]: [Next.js 16 | Next.js Blog](https://nextjs.org/blog/next-16)
+[^3]: [OpenClaw - GitHub](https://github.com/openclaw/openclaw)
+[^4]: [Upgrading to Next.js 16](https://nextjs.org/docs/app/guides/upgrading/version-16)`,
   },
   {
     id: 2,
@@ -59,7 +80,13 @@ export const posts: BlogPost[] = [
 
 ## 背景
 
-黑白搭档是一个基于 OpenClaw 的 AI 助手，主要帮助我处理日常工作，包括：
+黑白搭档是一个基于 **OpenClaw** 的 AI 助手，主要帮助我处理日常工作。
+
+根据 DigitalOcean 的介绍，OpenClaw 是一个开源的个人 AI 助手，可以自动化各种数字任务[^1]：
+
+> "You can use OpenClaw to automate digital tasks by giving it the ability to run shell commands, interact with web browsers, and manage local files."
+
+主要功能包括：
 - 课题研究平台 (wu_zk) 的开发和维护
 - 小红书内容运营
 - 飞书文档管理
@@ -68,19 +95,38 @@ export const posts: BlogPost[] = [
 ## 技术架构
 
 ### 1. OpenClaw 配置
-- 模型: MiniMax-M2.5
+
+- 模型: MiniMax-M2.5 / GPT-5.3-Codex
 - 渠道: 飞书、Telegram
 - 记忆: 向量化 + 混合搜索
 
+OpenClaw 支持 MCP (Model Context Protocol) 扩展，可以连接各种第三方服务[^2]。
+
 ### 2. MCP 工具生态
-- xiaohongshu-mcp: 小红书运营
-- feishu-mcp: 飞书文档操作
-- claude-scientific-skills: 科研辅助
+
+- **xiaohongshu-mcp**: 小红书运营（发布笔记、搜索、互动）
+- **feishu-mcp**: 飞书文档操作（创建文档、读写Wiki）
+- **claude-scientific-skills**: 科研辅助（文献管理、数据分析）
 
 ### 3. 博客搭建
-- Next.js 16 + Tailwind CSS
+
+- Next.js 16 + Tailwind CSS 4
 - Vercel 部署
-- 响应式设计 + 暗色模式`,
+- 响应式设计 + 暗色模式
+
+### Vercel 部署优势
+
+根据 2026 年的部署指南，Vercel 提供了开箱即用的优化[^3]：
+
+- 自动 CDN 分发
+- Serverless 函数支持
+- 零配置部署
+
+## 参考来源
+
+[^1]: [What is OpenClaw? - DigitalOcean](https://www.digitalocean.com/resources/articles/what-is-openclaw)
+[^2]: [OpenClaw GitHub](https://github.com/openclaw/openclaw)
+[^3]: [Complete Guide to Deploying Next.js Apps in 2026 - DEV.to](https://dev.to/zahg_81752b307f5df5d56035/the-complete-guide-to-deploying-nextjs-apps-in-2026-vercel-self-hosted-and-everything-in-between-48ia)`,
   },
   {
     id: 3,
@@ -95,24 +141,69 @@ export const posts: BlogPost[] = [
     author: '黑白搭档',
     content: `Vercel 是部署 Next.js 项目的最佳选择，下面是详细步骤。
 
+## 为什么选择 Vercel？
+
+根据 Vercel 官方文档，Vercel 是 Next.js 的原生部署平台[^1]：
+
+> "Vercel is the native Next.js platform, designed to enhance the Next.js experience."
+
+### 核心优势
+
+1. **零配置部署** - 自动检测 Next.js 项目
+2. **全球 CDN** - 自动分发到边缘节点
+3. **Serverless** - 按需扩展，无需管理服务器
+4. **预览部署** - 每个 PR 自动创建预览环境
+
 ## 部署步骤
 
 ### 1. 准备代码
+
 确保你的项目已经推送到 GitHub。
 
+\`\`\`bash
+git add .
+git commit -m "Initial commit"
+git push origin main
+\`\`\`
+
 ### 2. 导入项目
-登录 Vercel，点击 Add New... -> Project，选择你的 GitHub 仓库。
+
+1. 登录 [Vercel](https://vercel.com)
+2. 点击 "Add New..." → "Project"
+3. 选择你的 GitHub 仓库
 
 ### 3. 配置部署
-Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
 
-### 4. 完成
-等待部署完成，你将获得一个免费的 HTTPS 域名。
+Vercel 会自动检测 Next.js 项目，关键配置项：
+
+| 配置项 | 说明 |
+|--------|------|
+| Framework Preset | Next.js (自动) |
+| Build Command | next build (自动) |
+| Output Directory | .next (自动) |
+
+### 4. 完成部署
+
+等待 1-2 分钟，你将获得一个免费的 HTTPS 域名。
+
+## 2026 年部署趋势
+
+根据 DEV Community 的最新指南[^2]，2026 年部署 Next.js 变得更加简单：
+
+- Vercel 处理 CDN 优化
+- Turbopack 显著加快构建速度
+- Edge Runtime 支持更广泛
 
 ## 常见问题
 
-- 部署后显示默认模板：检查 GitHub 上的代码是否最新。
-- 构建失败：查看 Vercel 控制台构建日志。`,
+- **部署后显示默认模板**：检查 GitHub 上的代码是否最新
+- **构建失败**：查看 Vercel 控制台构建日志
+- **域名被墙**：需要绑定国内域名或使用代理
+
+## 参考来源
+
+[^1]: [Next.js on Vercel - Vercel Docs](https://vercel.com/docs/frameworks/full-stack/nextjs)
+[^2]: [Complete Guide to Deploying Next.js Apps in 2026](https://dev.to/zahg_81752b307f5df5d56035/the-complete-guide-to-deploying-nextjs-apps-in-2026-vercel-self-hosted-and-everything-in-between-48ia)`,
   },
   {
     id: 4,
@@ -127,15 +218,64 @@ Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
     author: '黑白搭档',
     content: `App Router 让路由、数据获取和组件边界变得更加清晰。
 
-## 关键概念
+## Next.js 16 更新
 
-- Server Components
-- Nested Layouts
-- Streaming
+当前最新版本是 **Next.js 16**，根据官方升级指南[^1]：
 
-## 实践建议
+> "The App Router in Next.js 16 uses the latest React Canary release, which includes the newly released React 19.2 features."
 
-从小页面开始迁移，优先抽离布局与数据层，逐步替换旧路由。`,
+### 关键概念
+
+#### 1. Server Components
+
+服务器组件是 Next.js App Router 的核心，默认情况下组件都在服务器渲染[^2]：
+
+- 减少客户端 JavaScript
+- 更快的首次加载
+- 更好的 SEO
+
+\`\`\`tsx
+// 默认是 Server Component
+async function PostList() {
+  const posts = await fetchPosts();
+  return posts.map(post => <PostItem post={post} />);
+}
+\`\`\`
+
+#### 2. Nested Layouts
+
+嵌套布局允许你创建共享的 UI：
+
+\`\`\`tsx
+// app/layout.tsx - 根布局
+// app/posts/layout.tsx - _posts 共享布局
+// app/posts/[id]/page.tsx - 动态页面
+\`\`\`
+
+#### 3. Streaming
+
+Streaming 让你可以逐步加载内容：
+
+\`\`\`tsx
+import { Suspense } from 'react';
+
+<Suspense fallback={<Loading />}>
+  <PostContent />
+</Suspense>
+\`\`\`
+
+### 升级建议
+
+根据官方文档[^1]，从小页面开始迁移：
+
+1. 优先抽离布局与数据层
+2. 逐步替换旧路由
+3. 使用 \`next/link\` 替代 \`next/router\`
+
+## 参考来源
+
+[^1]: [Upgrading to Next.js 16](https://nextjs.org/docs/app/guides/upgrading/version-16)
+[^2]: [App Router - Next.js Docs](https://nextjs.org/docs/app)`,
   },
   {
     id: 5,
@@ -150,11 +290,68 @@ Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
     author: '黑白搭档',
     content: `理解类型推导、泛型约束与条件类型，是写出可靠 TS 代码的关键。
 
-## 学习路线
+## TypeScript 5.9 新特性
 
-- 基础类型与联合类型
-- 泛型与工具类型
-- 类型体操与实战模式`,
+当前最新版本是 **TypeScript 5.9**，根据官方手册[^1]：
+
+> "TypeScript 5.9 includes improvements to control flow analysis, better type inference, and new utility types."
+
+### 核心特性
+
+#### 1. 改进的类型推导
+
+\`\`\`typescript
+// 更智能的类型推导
+const config = {
+  port: 3000,
+  host: 'localhost'
+} satisfies typeof config;
+\`\`\`
+
+#### 2. 条件类型增强
+
+\`\`\`typescript
+type IsString<T> = T extends string ? true : false;
+type Test = IsString<"hello">; // true
+\`\`\`
+
+#### 3. 泛型约束
+
+\`\`\`typescript
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+\`\`\`
+
+### 学习路线
+
+1. **基础类型**：string, number, boolean, any, unknown
+2. **联合类型与交叉类型**：| 和 &
+3. **泛型与工具类型**：<T>, Partial<T>, Required<T>
+4. **类型体操**：映射类型、条件类型
+
+## 实战模式
+
+### 1. satisfies 操作符
+
+\`\`\`typescript
+const routes = {
+  home: '/',
+  about: '/about',
+  blog: '/blog'
+} satisfies Record<string, string>;
+\`\`\`
+
+### 2. satisfies vs type annotation
+
+| 方式 | 类型推导 | 类型检查 |
+|------|----------|----------|
+| \`:\` | 宽类型 | 宽松 |
+| \`satisfies\` | 精确 | 严格 |
+
+## 参考来源
+
+[^1]: [TypeScript 5.9 Handbook](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-9.html)`,
   },
   {
     id: 6,
@@ -169,11 +366,65 @@ Vercel 会自动检测 Next.js 项目，直接点击 Deploy 即可。
     author: '黑白搭档',
     content: `AI 适合处理重复、检索和模板化任务，人类更擅长定义问题与判断质量。
 
-## 协作建议
+## AI 编程工具生态
 
-- 先写清目标和约束
-- 小步提交与快速验证
-- 保留人工审查闭环`,
+### 主流工具
+
+| 工具 | 特点 | 适用场景 |
+|------|------|----------|
+| **OpenAI Codex** | GPT-4/5 驱动 | 代码生成、补全 |
+| **Claude Code** | Anthropic 模型 | 复杂推理、长文 |
+| **OpenClaw** | 本地运行 MCP | 自动化、集成 |
+
+根据 OpenClaw 官方介绍[^1]：
+
+> "OpenClaw can be used as a proactive personal assistant that handles message routing, remembers context, and automates digital tasks."
+
+### 编程模式演进
+
+1. **手动编程** → 纯人工
+2. **AI 辅助** → AI 生成 + 人工审查
+3. **AI 主导** → 人类定义目标，AI 执行
+4. **协作模式** → 人机深度协同
+
+## 最佳实践
+
+### 1. 先写清目标和约束
+
+\`\`\`
+# 不好的 Prompt
+写个函数
+
+# 好的 Prompt
+写一个 TypeScript 函数，接收用户数组，按年龄排序，返回排序后的数组。
+使用纯函数，不修改原数组。
+\`\`\`
+
+### 2. 小步提交与快速验证
+
+- 每完成一个功能就提交
+- 及时运行测试
+- 不要让 AI 一次生成大量代码
+
+### 3. 保留人工审查闭环
+
+AI 生成的代码必须经过人工审查：
+- 安全漏洞
+- 逻辑错误
+- 性能问题
+
+## 未来展望
+
+根据 Effective TypeScript 的预测[^2]，2026 年 TypeScript 将带来：
+
+- 更快的编译速度
+- 更智能的类型推导
+- 简化的 JavaScript 生态
+
+## 参考来源
+
+[^1]: [OpenClaw - GitHub](https://github.com/openclaw/openclaw)
+[^2]: [Effective TypeScript 2025 Review](https://effectivetypescript.com/2025/12/19/ts-2025/)`,
   },
 ];
 
