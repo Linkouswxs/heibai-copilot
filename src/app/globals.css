@@ -1,5 +1,4 @@
 @import url('https://cdn.jsdelivr.net/npm/@fontsource/fusion-pixel-10px-monospaced-sc@5.2.5/index.css');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +6,6 @@
 
 :root {
   --font-fusion-pixel: 'Fusion Pixel 10px Monospaced SC', 'PingFang SC', 'Microsoft YaHei', monospace;
-  --font-reading: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
   color: #171717;
   background: #f4ecd8;
 }
@@ -15,10 +13,6 @@
 body {
   margin: 0;
   overflow-x: hidden;
-}
-
-.font-reading {
-  font-family: var(--font-reading);
 }
 
 .font-fusion {
