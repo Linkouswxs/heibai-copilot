@@ -1,16 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/fusion-pixel-10px-monospaced-sc@5.2.5/index.css');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --font-fusion-pixel: 'Fusion Pixel 10px Monospaced SC', 'PingFang SC', 'Microsoft YaHei', monospace;
   color: #171717;
   background: #f4ecd8;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
+}
+
+.font-fusion {
+  font-family: var(--font-fusion-pixel);
 }
 
 .pixel-grid {
@@ -21,7 +27,7 @@ body {
 }
 
 .pixel-heading {
-  font-family: 'Press Start 2P', system-ui, monospace;
+  font-family: var(--font-fusion-pixel);
   line-height: 1.4;
 }
 
