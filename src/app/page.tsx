@@ -85,7 +85,7 @@ export default function Home() {
         {loading ? (
           <div className="pixel-card p-8 text-center">正在从后端加载文章...</div>
         ) : (
-          <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <section className="grid grid-cols-2 gap-4 lg:grid-cols-3 2xl:grid-cols-4">
             {posts.map((post) => (
               <Link key={post.id} href={`/posts/${post.id}`} className="pixel-card group pixel-card-hover">
                 <div className="relative aspect-[16/10] overflow-hidden border-b-4 border-black bg-[#d4c5a1]">
