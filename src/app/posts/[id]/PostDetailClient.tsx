@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { BlogPost } from '@/posts-data';
 
 function PixelStat({ label, value }: { label: 'like' | 'comment' | 'collect'; value: number }) {
@@ -76,8 +78,6 @@ export default function PostDetailClient({ id }: { id: string }) {
     );
   }
 
-  const blocks = post.content.trim().split('\n\n');
-
   return (
     <div className="pixel-grid min-h-screen bg-[#f4ecd8] pb-12 text-[#171717]">
       <header className="border-b-4 border-black bg-[#f8f0de]">
@@ -108,39 +108,26 @@ export default function PostDetailClient({ id }: { id: string }) {
               <PixelStat label="collect" value={post.collects} />
             </div>
 
-            <section className="space-y-4 leading-7">
-              {blocks.map((block, index) => {
-                const line = block.trim();
-
-                if (line.startsWith('## ')) {
-                  return (
-                    <h2 key={index} className="pixel-heading pt-2 text-xl">
-                      {line.replace('## ', '')}
-                    </h2>
-                  );
-                }
-
-                if (line.startsWith('### ')) {
-                  return (
-                    <h3 key={index} className="pixel-heading text-lg">
-                      {line.replace('### ', '')}
-                    </h3>
-                  );
-                }
-
-                if (line.includes('\n- ') || line.startsWith('- ')) {
-                  const items = line.split('\n').map((item) => item.replace('- ', '').trim());
-                  return (
-                    <ul key={index} className="list-disc space-y-1 pl-6">
-                      {items.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  );
-                }
-
-                return <p key={index}>{line}</p>;
-              })}
+            <section className="post-prose prose prose-sm max-w-none leading-7 md:prose-base">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h2: ({ children }) => <h2 className="mt-7 border-l-4 border-black pl-3 text-xl font-semibold">{children}</h2>,
+                  h3: ({ children }) => <h3 className="mt-5 text-lg font-semibold">{children}</h3>,
+                  a: ({ href, children }) => (
+                    <a href={href} target="_blank" rel="noreferrer" className="font-medium text-[#7a2a00] underline underline-offset-2">
+                      {children}
+                    </a>
+                  ),
+                  p: ({ children }) => <p className="my-3 text-[0.98rem] leading-7 text-[#1f1f1f]">{children}</p>,
+                  li: ({ children }) => <li className="my-1">{children}</li>,
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-4 border-black bg-[#f8f0de] px-4 py-2 italic">{children}</blockquote>
+                  ),
+                }}
+              >
+                {post.content}
+              </ReactMarkdown>
             </section>
           </div>
         </article>
