@@ -58,7 +58,12 @@ export default function Home() {
       <header className="sticky top-0 z-40 border-b-4 border-black bg-[#f8f0de]">
         <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4">
           <h1 className="pixel-heading text-xl neon-flicker">黑白搭档 BLOG</h1>
-          <span className="pixel-chip pixel-float">8-BIT MODE</span>
+          <div className="flex items-center gap-2">
+            <Link href="/about" className="pixel-btn">
+              ABOUT
+            </Link>
+            <span className="pixel-chip pixel-float">8-BIT MODE</span>
+          </div>
         </div>
       </header>
 
