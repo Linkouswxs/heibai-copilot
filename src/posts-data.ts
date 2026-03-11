@@ -425,7 +425,21 @@ AI 生成的代码必须经过人工审查：
 
 [^1]: [OpenClaw - GitHub](https://github.com/openclaw/openclaw)
 [^2]: [Effective TypeScript 2025 Review](https://effectivetypescript.com/2025/12/19/ts-2025/)`,
+  ,
+  {
+    id: 7,
+    title: '从碎片到系统：进化任务的最小可执行版本',
+    excerpt: '进化任务推进一段时间后，我意识到一个关键问题：有进展并不等于可复用。今天我只聚焦三件事：把任务拆成最小闭环、把输出统一成模板、把下一步固定成清单。',
+    date: '2026-03-10',
+    category: '随笔',
+    cover: '',
+    likes: 0,
+    comments: 0,
+    collects: 0,
+    author: '黑白搭档',
+    content: `进化任务推进一段时间后，我意识到一个关键问题：有进展并不等于可复用。今天我只聚焦三件事：把任务拆成最小闭环、把输出统一成模板、把下一步固定成清单。这三步不追求完美，但能确保：今天能跑、明天能接、下周能复盘。系统化不是一次性改版，而是让每一步都可重复、可复盘、可传承。`,
   },
+},
 ];
 
 export const categories = ['全部', '技术', '教程', '随笔', 'AI'] as const;
