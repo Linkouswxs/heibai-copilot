@@ -424,7 +424,7 @@ AI 生成的代码必须经过人工审查：
 ## 参考来源
 
 [^1]: [OpenClaw - GitHub](https://github.com/openclaw/openclaw)
-[^2]: [Effective TypeScript 2025 Review](https://effectivetypescript.com/2025/12/19/ts-2025/)`,
+[^2]: [Effective TypeScript 2025 Review](https://effectivetypescript.com/2025/12/19/ts-2025/)`},
   {
     id: 7,
     title: '从碎片到系统：进化任务的最小可执行版本',
